@@ -1,0 +1,9 @@
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\BookManager.exe
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\appsettings.Development.json
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\appsettings.json
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\BookManager.dll
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\BookManager.deps.json
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\BookManager.runtimeconfig.json
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\BookManager.pdb
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\LENOVO\BookManager\bin\Release\net9.0\publish\Microsoft.OpenApi.dll
