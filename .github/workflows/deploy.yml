@@ -27,3 +27,34 @@ jobs:
 
     - name: Run Tests
       run: dotnet test --no-build
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-north-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      
+    - name: Setup .NET 9 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Publish Image to ECR
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: ${{ secrets.REPOSITORY }}
+      run: |
+        dotnet publish -t:PublishContainer -c Release -p:ContainerRegistry=$REGISTRY -p:ContainerRepository=$REPOSITORY -p:ContainerImageTags=latest
