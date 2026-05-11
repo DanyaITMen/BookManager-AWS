@@ -58,3 +58,26 @@ jobs:
         REPOSITORY: ${{ secrets.REPOSITORY }}
       run: |
         dotnet publish -t:PublishContainer -c Release -p:ContainerRegistry=$REGISTRY -p:ContainerRepository=$REPOSITORY -p:ContainerImageTags=latest
+
+  deploy:
+    needs: publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Deploy to Amazon ECS
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      with:
+        task-definition: deployments/ecs-task-definition.json
+        service: bookmanager-svc
+        cluster: dev-cluster
+        wait-for-service-stability: true
